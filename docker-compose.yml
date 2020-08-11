@@ -17,11 +17,13 @@ services:
             - db_log
             - db_user
     php:
-        image: php:fpm
+        build:
+            context: .
+            dockerfile: Dockerfile-php7-fpm-mysql
         volumes:
             - ./src/site:/site
             - ./config/php.log.conf:/usr/local/etc/php-fpm.d/zz-log.conf
-            #- ./config/php.php.ini:/usr/local/etc/php/php.ini
+            #- ./config/php.ini:/usr/local/etc/php/php.ini
 ## Place your own PHP.INI file in PHP directory and uncomment the line above
         depends_on: 
             - db_dict

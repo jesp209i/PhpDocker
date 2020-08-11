@@ -38,7 +38,7 @@ From your favorite browser you can access:
 
 You can change the exposed ports in the `docker-compose.yml`-file.
 
-Place your PHP-code in the `/src/site` directory.
+Place your HTML/PHP-code in the `/src/site` directory.
 
 ### Stopping 
 Simply press `ctrl-c` in the terminal where docker-compose is running
@@ -69,14 +69,13 @@ When running the image, the file mentioned above maps to `/etc/nginx/conf.d/defa
 - [NGINX on Docker Hub](https://hub.docker.com/_/nginx)
 
 ### PHP
+This image is a bit special - The PHP image is created using a dockerfile, specifically: `Dockerfile-php7-fpm-mysql`. This is done to activate MySQL support, needed to connect to MariaDB.
 
-The `/config/php.log.conf` contains some configuration for logging.
+The `/config/php.log.conf` contains some configuration for logging, and when running the image, it maps to `/usr/local/etc/php-fpm.d/zz-log.conf` inside the docker container.
 
-When running the image, the file mentioned above maps to `/usr/local/etc/php-fpm.d/zz-log.conf` inside the docker container.
-
-This setup uses the version of `php.ini` which is included in the image from Docker Hub. You can use your own by placing a file named `php.php.ini` in the `/config` folder, and uncommenting (remove the hash-tag/#) this line in `docker-compose.yml`:
+This setup uses the version of `php.ini` which is included in the build image. You can use your own by placing a file named `php.ini` in the `/config` folder, and uncommenting (remove the hash-tag/#) this line in `docker-compose.yml`:
 ```
-#- ./config/php.php.ini:/usr/local/etc/php/php.ini
+#- ./config/php.ini:/usr/local/etc/php/php.ini
 ```
 
 - [PHP on Docker Hub](https://hub.docker.com/_/php)
