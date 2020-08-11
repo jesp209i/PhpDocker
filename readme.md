@@ -32,6 +32,8 @@ To start up:
 docker-compose up
 ```
 
+> Be patient first time running above command. Docker will download the needed images, and build one image. These actions may take a while.
+
 From your favorite browser you can access:
 - NGINX server on localhost:8080
 - PhpMyAdmin on localhost:7000
