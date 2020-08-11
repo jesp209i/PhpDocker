@@ -15,7 +15,11 @@ I used these guides to set up PHP and NGINX:
 - http://geekyplatypus.com/dockerise-your-php-application-with-nginx-and-php7-fpm/
 - http://geekyplatypus.com/making-your-dockerised-php-application-even-better/
 
-## Setup
+## Caution
+
+This is not made to be production ready. 
+
+## Starting/stopping the project
 
 Clone this repo.
 
@@ -35,3 +39,66 @@ From your favorite browser you can access:
 You can change the exposed ports in the `docker-compose.yml`-file.
 
 Place your PHP-code in the `/src/site` directory.
+
+### Stopping 
+Simply press `ctrl-c` in the terminal where docker-compose is running
+
+## Configuring the components
+
+This is in no way a description of all ways to configure this project.
+This is just the mere basics, but I have provided some links for you to explore. 
+
+On Docker Hub there are more information for each component, as well as other versions to explore.
+
+### Docker-compose
+
+The `docker-compose.yml` is responsible for orchestrating everything.
+- https://docs.docker.com/compose/
+
+The `.env` file contains some parameters used in `docker-compose.yml`.
+
+- https://docs.docker.com/compose/environment-variables/
+- https://docs.docker.com/compose/env-file/
+
+### NIGNX
+
+NGINX specific configuration is located in `/config/nginx.site.conf`.
+
+When running the image, the file mentioned above maps to `/etc/nginx/conf.d/default.conf` inside the docker container.
+
+- [NGINX on Docker Hub](https://hub.docker.com/_/nginx)
+
+### PHP
+
+The `/config/php.log.conf` contains some configuration for logging.
+
+When running the image, the file mentioned above maps to `/usr/local/etc/php-fpm.d/zz-log.conf` inside the docker container.
+
+This setup uses the version of `php.ini` which is included in the image from Docker Hub. You can use your own by placing a file named `php.php.ini` in the `/config` folder, and uncommenting (remove the hash-tag/#) this line in `docker-compose.yml`:
+```
+#- ./config/php.php.ini:/usr/local/etc/php/php.ini
+```
+
+- [PHP on Docker Hub](https://hub.docker.com/_/php)
+
+### MariaDB
+
+MariaDB is configured from `docker-compose.yml` and `.env`.
+
+The same password is used on all 3 instances.
+
+All databases are configured to save their data in subfolders in the `/mariadb` folder. This way you will have your data the next time you run `docker-compose up`.
+
+Simply delete the subfolders in `/mariadb`, to get a fresh start. (but leave the `/mariadb` folder, or else you will get an error)
+
+- [MariaDB on Docker Hub](https://hub.docker.com/_/mariadb)
+
+### phpMyAdmin
+
+phpMyAdmin is configured to show all 3 databases. You just need to select one, and log in.
+
+- [phpMyAdmin on Docker Hub](https://hub.docker.com/r/phpmyadmin/phpmyadmin)
+
+# Other tools
+I use Portainer to get a better overview of my Docker images, running containers and other stuff Docker does.
+- https://www.portainer.io/
