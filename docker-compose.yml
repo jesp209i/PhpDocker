@@ -13,9 +13,6 @@ services:
             - ./config/nginx.site.conf:/etc/nginx/conf.d/default.conf
         depends_on: 
             - php
-            - db_dict
-            - db_log
-            - db_user
     php:
         image: php:fpm-alpine3.11
         volumes:
